@@ -1,1 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paul's Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a0a0a;
+            --accent: #ff6b35;
+            --accent-soft: #ffa07a;
+            --text: #2a2a2a;
+            --text-light: #666;
+            --bg-light: #fafafa;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 4rem 2rem;
+        }
+
+        /* Animated Words Background */
+        .words-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards;
+        }
+
+        .words-line {
+            position: absolute;
+            white-space: nowrap;
+            font-size: 4rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: rgba(255, 107, 53, 0.08);
+            animation: scrollWords 25s linear infinite;
+            user-select: none;
+        }
+
+        .words-line:nth-child(1) { top: 15%; animation-duration: 30s; }
+        .words-line:nth-child(2) { top: 35%; animation-duration: 25s; animation-delay: -5s; }
+        .words-line:nth-child(3) { top: 55%; animation-duration: 35s; animation-delay: -10s; }
+        .words-line:nth-child(4) { top: 75%; animation-duration: 28s; animation-delay: -15s; }
+
+        @keyframes scrollWords {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Profile Section */
+        .profile-section {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            opacity: 0;
+            animation: slideUp 0.8s ease-out 0.3s forwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-image-wrapper {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .profile-image-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-soft), #ffd700);
+            border-radius: 50%;
+            animation: rotate 8s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .name {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .typewriter-container {
+            height: 2.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .typewriter {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 500;
+            border-right: 2px solid var(--accent);
+            padding-right: 5px;
+            animation: blink 0.7s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        .bio {
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-light);
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.2s forwards;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 1.3rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 4rem 0;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.5s forwards;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+            grid-auto-rows: 1fr;
+        }
+        
+        .projects-grid > a,
+        .projects-grid > div {
+            display: flex;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 107, 53, 0.1);
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.2);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .project-description {
+            color: var(--text-light);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .card-link {
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 1rem;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card:hover .card-link {
+            transform: translateX(5px);
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-soft) 100%);
+            padding: 4rem 2rem;
+            border-radius: 30px;
+            margin: 4rem auto;
+            max-width: 800px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.3);
+        }
+
+        .newsletter-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            outline: none;
+        }
+
+        .newsletter-button {
+            padding: 1rem 2.5rem;
+            background: white;
+            color: var(--accent);
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .name { font-size: 2.5rem; }
+            .typewriter { font-size: 1.2rem; }
+            .words-line { font-size: 2.5rem; }
+            .newsletter-form { flex-direction: column; }
+            .newsletter-input { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Words Background -->
+    <div class="words-background">
+        <div class="words-line">handsome · smart · integrity · friend to all · visionary · creative · handsome · smart · integrity · friend to all · visionary · creative · </div>
+        <div class="words-line">innovative · thoughtful · leader · inspiring · authentic · innovative · thoughtful · leader · inspiring · authentic · </div>
+        <div class="words-line">passionate · dedicated · empathetic · bold · curious · passionate · dedicated · empathetic · bold · curious · </div>
+        <div class="words-line">brilliant · kind · driven · humble · strategic · brilliant · kind · driven · humble · strategic · </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="profile-section">
+            <div class="profile-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop" alt="Profile Picture" class="profile-image">
+            </div>
+            
+            <h1 class="name">Paul Staples</h1>
+            
+            <div class="typewriter-container">
+                <span class="typewriter" id="typewriter"></span>
+            </div>
+            
+            <p class="bio">
+                I'm a writer, thinker, and builder who spent 13 years at The Vanguard Group, most recently as a product marketing manager and lead communications strategist for the Personal Investor division. I'm now taking time to explore ideas, write publicly, and build projects based on whatever I'm genuinely curious about. This is my corner of the web where you can find out more about me and my work.
+            </p>
+            
+            <div class="social-links">
+                <a href="https://substack.com/@yourusername" class="social-link" title="Substack">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/>
+                    </svg>
+                </a>
+                <a href="https://linkedin.com/in/yourusername" class="social-link" title="LinkedIn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+                <a href="https://instagram.com/yourusername" class="social-link" title="Instagram">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <a href="/cdn-cgi/l/email-protection#0970667c7b276c64686065496c71686479656c276a6664" class="social-link" title="Email">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects-section">
+        <div class="container">
+            <h2 class="section-title">Current Projects</h2>
+            <div class="projects-grid">
+                <a href="https://minimumviableexpat.com" target="_blank" style="text-decoration: none; color: inherit;">
+                    <div class="project-card">
+                        <h3 class="project-title">Minimum Viable Expat</h3>
+                        <p class="project-description">
+                            Minimum Viable Expat is a cost-of-living comparison tool that lets people see how far their budget goes across more than 240 cities worldwide. It's designed to help anyone evaluate geo-arbitrage options quickly and understand what a realistic lifestyle looks like in different places.
+                        </p>
+                        <span class="card-link">Visit Site →</span>
+                    </div>
+                </a>
+                
+                <a href="https://yoursubstack.substack.com" target="_blank" style="text-decoration: none; color: inherit;">
+                    <div class="project-card">
+                        <h3 class="project-title">Substack</h3>
+                        <p class="project-description">
+                            My Substack is where I publish writing that blends humor, social analysis, psychology, and the occasional financial perspective. It's the main place where I think out loud and explore whatever I find interesting.
+                        </p>
+                        <span class="card-link">Read More →</span>
+                    </div>
+                </a>
+                
+                <a href="mailto:minimumviableexpat@proton.me?subject=Consulting Inquiry" style="text-decoration: none; color: inherit;">
+                    <div class="project-card">
+                        <h3 class="project-title">Consulting</h3>
+                        <p class="project-description">
+                            I take on limited consulting engagements focused on marketing and communications strategy, 
+                            specializing in financial services, fintech, crypto, and DeFi. Rates start at $150/hour.
+                        </p>
+                        <span class="card-link">Contact Me →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <div class="container">
+        <section class="newsletter-section">
+            <h2 class="newsletter-title">Join the Conversation</h2>
+            <p class="newsletter-subtitle">
+                Subscribe to receive thought-provoking essays, updates on my projects, 
+                and occasional deep dives into topics I'm obsessing over.
+            </p>
+            <form class="newsletter-form" id="newsletter-form">
+                <input 
+                    type="email" 
+                    class="newsletter-input" 
+                    placeholder="Enter your email"
+                    required
+                    id="email-input"
+                >
+                <button type="submit" class="newsletter-button">Subscribe</button>
+            </form>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Paul Staples. Built with curiosity and care.</p>
+    </footer>
+
+    <script>
+        // Simple Typewriter Effect - types once
+        const phrase = "From Financial Services to Following Curiosity";
+        let charIndex = 0;
+        const typewriterElement = document.getElementById('typewriter');
+        
+        function typeWriter() {
+            if (charIndex < phrase.length) {
+                typewriterElement.textContent += phrase.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 80);
+            } else {
+                // Remove blinking cursor after typing is done
+                setTimeout(() => {
+                    typewriterElement.style.borderRight = 'none';
+                }, 500);
+            }
+        }
+        
+        // Start typewriter effect after a short delay
+        setTimeout(typeWriter, 800);
+        
+        // Newsletter Form Handler
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email-input').value;
+            
+            // Replace this URL with your actual Substack newsletter signup URL
+            window.open('https://yoursubstack.substack.com/subscribe', '_blank');
+            
+            // Clear the input and show feedback
+            document.getElementById('email-input').value = '';
+            alert('Thank you for subscribing! You\'ll be redirected to complete your subscription.');
+        });
+    </script>
+</body>
+</html>
